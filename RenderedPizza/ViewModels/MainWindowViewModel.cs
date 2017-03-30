@@ -114,6 +114,8 @@ namespace RenderedPizza.ViewModels
 
 			CalculatePercentages();
 			FindCheapestPizzas();
+
+			PrintJSONinFile();
 		}
 
 		public void CalculatePercentages()
@@ -166,6 +168,97 @@ namespace RenderedPizza.ViewModels
 				}
 			}
 			CheapestPizzaWithMozzarelaAndMushrooms = tempPizza;
+		}
+
+		public void PrintJSONinFile()
+		{
+			using (System.IO.StreamWriter file = new System.IO.StreamWriter("Pizzas.json"))
+			{
+				file.WriteLine("{");
+				file.WriteLine("\t\"personal_info\":");
+				file.WriteLine("\t\t{\"full_name\":\"Nemanja Ilic\", \"email\":\"nemanja.ilic@outlook.com\", \"code_link\": \"https://github.com/NEMANJA-ILIC/RenderedPizza\"},");
+
+				file.Write("\t\"answer\": [{\"group_1\": {\"percentage\": \"");
+				file.Write(PizzasWithMeatPercentage);
+				file.Write("%\", \"cheapest\":{\"");
+				file.Write(cheapestPizzaWithMeat.PizzaName.ToLower());
+				file.Write("\":{\"ingredients\":[");
+				
+				for (int i = 0; i < cheapestPizzaWithMeat.Ingredients.Length - 1; i++)
+				{
+					file.Write("\"");
+					file.Write(cheapestPizzaWithMeat.Ingredients[i]);
+					file.Write("\",");
+				}
+				file.Write("\"");
+				file.Write(cheapestPizzaWithMeat.Ingredients.Last());
+				file.Write("\"]},\"price\":");
+
+				file.Write(cheapestPizzaWithMeat.Price);
+				file.WriteLine("}}},");
+
+				// group_2
+				file.Write("\t\t\t\t{\"group_2\": {\"percentage\": \"");
+				file.Write(PizzasWithMultipleCheasePercentage);
+				file.Write("%\", \"cheapest\":{\"");
+				file.Write(cheapestPizzaWithMultipleChease.PizzaName.ToLower());
+				file.Write("\":{\"ingredients\":[");
+
+				for (int i = 0; i < cheapestPizzaWithMultipleChease.Ingredients.Length - 1; i++)
+				{
+					file.Write("\"");
+					file.Write(cheapestPizzaWithMultipleChease.Ingredients[i]);
+					file.Write("\",");
+				}
+				file.Write("\"");
+				file.Write(cheapestPizzaWithMultipleChease.Ingredients.Last());
+				file.Write("\"]},\"price\":");
+
+				file.Write(cheapestPizzaWithMultipleChease.Price);
+				file.WriteLine("}}},");
+
+				// group_3
+				file.Write("\t\t\t\t{\"group_2\": {\"percentage\": \"");
+				file.Write(PizzasWithMeatAndOlivesPercentage);
+				file.Write("%\", \"cheapest\":{\"");
+				file.Write(cheapestPizzaWithMeatAndOlives.PizzaName.ToLower());
+				file.Write("\":{\"ingredients\":[");
+
+				for (int i = 0; i < cheapestPizzaWithMeatAndOlives.Ingredients.Length - 1; i++)
+				{
+					file.Write("\"");
+					file.Write(cheapestPizzaWithMeatAndOlives.Ingredients[i]);
+					file.Write("\",");
+				}
+				file.Write("\"");
+				file.Write(cheapestPizzaWithMeatAndOlives.Ingredients.Last());
+				file.Write("\"]},\"price\":");
+
+				file.Write(cheapestPizzaWithMeatAndOlives.Price);
+				file.WriteLine("}}},");
+
+				// group_4
+				file.Write("\t\t\t\t{\"group_2\": {\"percentage\": \"");
+				file.Write(PizzasWithMozzarelaAndMushroomsPercentage);
+				file.Write("%\", \"cheapest\":{\"");
+				file.Write(cheapestPizzaWithMozzarelaAndMushrooms.PizzaName.ToLower());
+				file.Write("\":{\"ingredients\":[");
+
+				for (int i = 0; i < cheapestPizzaWithMozzarelaAndMushrooms.Ingredients.Length - 1; i++)
+				{
+					file.Write("\"");
+					file.Write(cheapestPizzaWithMozzarelaAndMushrooms.Ingredients[i]);
+					file.Write("\",");
+				}
+				file.Write("\"");
+				file.Write(cheapestPizzaWithMozzarelaAndMushrooms.Ingredients.Last());
+				file.Write("\"]},\"price\":");
+
+				file.Write(cheapestPizzaWithMozzarelaAndMushrooms.Price);
+				file.WriteLine("}}}]");
+
+				file.WriteLine("}");
+			}
 		}
 	}
 }
