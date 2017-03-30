@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderedPizza.Helpers;
 using RenderedPizza.Models;
+using Weather3.Helpers;
 
 namespace RenderedPizza.ViewModels
 {
-	public class MainWindowViewModel
+	public class MainWindowViewModel : ViewModelBase
 	{
 		public MainWindowViewModel()
 		{
-			pizzas = new List<PizzaModel>();
-			pizzasWithMeat = new List<PizzaModel>();
-			pizzasWithMultipleChease = new List<PizzaModel>();
-			pizzasWithMeatAndOlives = new List<PizzaModel>();
-			pizzasWithMozzarelaAndMushrooms = new List<PizzaModel>();
+			pizzas = new ObservableCollection<PizzaModel>();
+			PizzasWithMeat = new ObservableCollection<PizzaModel>();
+			PizzasWithMultipleChease = new ObservableCollection<PizzaModel>();
+			PizzasWithMeatAndOlives = new ObservableCollection<PizzaModel>();
+			PizzasWithMozzarelaAndMushrooms = new ObservableCollection<PizzaModel>();
 		}
 
-		private List<PizzaModel> pizzasWithMeat;
-		private List<PizzaModel> pizzasWithMultipleChease;
-		private List<PizzaModel> pizzasWithMeatAndOlives;
-		private List<PizzaModel> pizzasWithMozzarelaAndMushrooms;
+		public ObservableCollection<PizzaModel> PizzasWithMeat { get; set; }
+		public ObservableCollection<PizzaModel> PizzasWithMultipleChease { get; set; }
+		public ObservableCollection<PizzaModel> PizzasWithMeatAndOlives { get; set; }
+		public ObservableCollection<PizzaModel> PizzasWithMozzarelaAndMushrooms { get; set; }
 
 		private double pizzasWithMeatPercentage;
 		public double PizzasWithMeatPercentage
@@ -86,8 +88,8 @@ namespace RenderedPizza.ViewModels
 			set { cheapestPizzaWithMozzarelaAndMushrooms = value; }
 		}
 
-		private List<PizzaModel> pizzas;
-		public List<PizzaModel> Pizzas
+		private ObservableCollection<PizzaModel> pizzas;
+		public ObservableCollection<PizzaModel> Pizzas
 		{
 			get
 			{
@@ -107,10 +109,14 @@ namespace RenderedPizza.ViewModels
 
 			pizzas = RenderedPizza.Helpers.PizzasRepacker.RepackPizzas(jsonPizzasModel);
 
-			pizzasWithMeat = PizzasRepacker.getPizzasWithMeat(pizzas);
-			pizzasWithMultipleChease = PizzasRepacker.getPizzasWithMultipleChease(pizzas);
-			pizzasWithMeatAndOlives = PizzasRepacker.getPizzasWithMeatAndOlives(pizzasWithMeat);
-			pizzasWithMozzarelaAndMushrooms = PizzasRepacker.getPizzasWithMozzarelaAndMushrooms(pizzas);
+			PizzasWithMeat = PizzasRepacker.getPizzasWithMeat(pizzas);
+			OnPropertyChanged("PizzasWithMeat");
+			PizzasWithMultipleChease = PizzasRepacker.getPizzasWithMultipleChease(pizzas);
+			OnPropertyChanged("PizzasWithMultipleChease");
+			PizzasWithMeatAndOlives = PizzasRepacker.getPizzasWithMeatAndOlives(PizzasWithMeat);
+			OnPropertyChanged("PizzasWithMeatAndOlives");
+			PizzasWithMozzarelaAndMushrooms = PizzasRepacker.getPizzasWithMozzarelaAndMushrooms(pizzas);
+			OnPropertyChanged("PizzasWithMozzarelaAndMushrooms");
 
 			CalculatePercentages();
 			FindCheapestPizzas();
@@ -120,17 +126,17 @@ namespace RenderedPizza.ViewModels
 
 		public void CalculatePercentages()
 		{
-			PizzasWithMeatPercentage = (pizzasWithMeat.Count / (double)pizzas.Count) * 100;
-			PizzasWithMultipleCheasePercentage = (pizzasWithMultipleChease.Count / (double)pizzas.Count) * 100;
-			PizzasWithMeatAndOlivesPercentage = (pizzasWithMeatAndOlives.Count / (double)pizzas.Count) * 100;
-			PizzasWithMozzarelaAndMushroomsPercentage = (pizzasWithMozzarelaAndMushrooms.Count / (double)pizzas.Count) * 100;
+			PizzasWithMeatPercentage = (PizzasWithMeat.Count / (double)pizzas.Count) * 100;
+			PizzasWithMultipleCheasePercentage = (PizzasWithMultipleChease.Count / (double)pizzas.Count) * 100;
+			PizzasWithMeatAndOlivesPercentage = (PizzasWithMeatAndOlives.Count / (double)pizzas.Count) * 100;
+			PizzasWithMozzarelaAndMushroomsPercentage = (PizzasWithMozzarelaAndMushrooms.Count / (double)pizzas.Count) * 100;
 		}
 
 		public void FindCheapestPizzas()
 		{
 			PizzaModel tempPizza = new PizzaModel();
-			tempPizza = pizzasWithMeat.FirstOrDefault();
-			foreach (PizzaModel pizza in pizzasWithMeat)
+			tempPizza = PizzasWithMeat.FirstOrDefault();
+			foreach (PizzaModel pizza in PizzasWithMeat)
 			{
 				if (pizza.Price < tempPizza.Price)
 				{
@@ -139,8 +145,8 @@ namespace RenderedPizza.ViewModels
 			}
 			CheapestPizzaWithMeat = tempPizza;
 
-			tempPizza = pizzasWithMultipleChease.FirstOrDefault();
-			foreach (PizzaModel pizza in pizzasWithMultipleChease)
+			tempPizza = PizzasWithMultipleChease.FirstOrDefault();
+			foreach (PizzaModel pizza in PizzasWithMultipleChease)
 			{
 				if (pizza.Price < tempPizza.Price)
 				{
@@ -149,8 +155,8 @@ namespace RenderedPizza.ViewModels
 			}
 			CheapestPizzaWithMultipleChease = tempPizza;
 
-			tempPizza = pizzasWithMeatAndOlives.FirstOrDefault();
-			foreach (PizzaModel pizza in pizzasWithMeatAndOlives)
+			tempPizza = PizzasWithMeatAndOlives.FirstOrDefault();
+			foreach (PizzaModel pizza in PizzasWithMeatAndOlives)
 			{
 				if (pizza.Price < tempPizza.Price)
 				{
@@ -159,8 +165,8 @@ namespace RenderedPizza.ViewModels
 			}
 			CheapestPizzaWithMeatAndOlives = tempPizza;
 
-			tempPizza = pizzasWithMozzarelaAndMushrooms.FirstOrDefault();
-			foreach (PizzaModel pizza in pizzasWithMozzarelaAndMushrooms)
+			tempPizza = PizzasWithMozzarelaAndMushrooms.FirstOrDefault();
+			foreach (PizzaModel pizza in PizzasWithMozzarelaAndMushrooms)
 			{
 				if (pizza.Price < tempPizza.Price)
 				{
@@ -183,7 +189,7 @@ namespace RenderedPizza.ViewModels
 				file.Write("%\", \"cheapest\":{\"");
 				file.Write(cheapestPizzaWithMeat.PizzaName.ToLower());
 				file.Write("\":{\"ingredients\":[");
-				
+
 				for (int i = 0; i < cheapestPizzaWithMeat.Ingredients.Length - 1; i++)
 				{
 					file.Write("\"");

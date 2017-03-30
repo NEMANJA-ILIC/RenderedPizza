@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RenderedPizza.Models;
+using System.Collections.ObjectModel;
 
 namespace RenderedPizza.Helpers
 {
 	public class PizzasRepacker
 	{
-		public static List<PizzaModel> RepackPizzas(JSONPizzasModel jsonPizzasModel)
+		public static ObservableCollection<PizzaModel> RepackPizzas(JSONPizzasModel jsonPizzasModel)
 		{
-			List<PizzaModel> tempPizzaModels = new List<PizzaModel>();
+			ObservableCollection<PizzaModel> tempPizzaModels = new ObservableCollection<PizzaModel>();
 
 			foreach (Pizza pizza in jsonPizzasModel.pizzas)	
 			{
@@ -30,9 +31,9 @@ namespace RenderedPizza.Helpers
 			return tempPizzaModels;
 		}
 
-		public static List<PizzaModel> getPizzasWithMeat(List<PizzaModel> pizzasToChose)
+		public static ObservableCollection<PizzaModel> getPizzasWithMeat(ObservableCollection<PizzaModel> pizzasToChose)
 		{
-			List<PizzaModel> PizzasWithMeat = new List<PizzaModel>();
+			ObservableCollection<PizzaModel> PizzasWithMeat = new ObservableCollection<PizzaModel>();
 			foreach (PizzaModel pizza in pizzasToChose)
 			{
 				foreach (string pizzaIngredient in pizza.Ingredients)
@@ -48,9 +49,9 @@ namespace RenderedPizza.Helpers
 			return PizzasWithMeat;
 		}
 
-		public static List<PizzaModel> getPizzasWithMultipleChease(List<PizzaModel> pizzasToChose)
+		public static ObservableCollection<PizzaModel> getPizzasWithMultipleChease(ObservableCollection<PizzaModel> pizzasToChose)
 		{
-			List<PizzaModel> pizzasWithMultipleChease = new List<PizzaModel>();
+			ObservableCollection<PizzaModel> pizzasWithMultipleChease = new ObservableCollection<PizzaModel>();
 			foreach (PizzaModel pizza in pizzasToChose)
 			{
 				int cheeseCount = 0;
@@ -71,9 +72,9 @@ namespace RenderedPizza.Helpers
 			return pizzasWithMultipleChease;
 		}
 
-		public static List<PizzaModel> getPizzasWithMeatAndOlives(List<PizzaModel> pizzasToChose)
+		public static ObservableCollection<PizzaModel> getPizzasWithMeatAndOlives(ObservableCollection<PizzaModel> pizzasToChose)
 		{
-			List<PizzaModel> pizzasWithMeatAndOlives = new List<PizzaModel>();
+			ObservableCollection<PizzaModel> pizzasWithMeatAndOlives = new ObservableCollection<PizzaModel>();
 			foreach (PizzaModel pizza in pizzasToChose)
 			{
 				foreach (string pizzaIngredient in pizza.Ingredients)
@@ -89,9 +90,9 @@ namespace RenderedPizza.Helpers
 			return pizzasWithMeatAndOlives;
 		}
 
-		public static List<PizzaModel> getPizzasWithMozzarelaAndMushrooms(List<PizzaModel> pizzasToChose)
+		public static ObservableCollection<PizzaModel> getPizzasWithMozzarelaAndMushrooms(ObservableCollection<PizzaModel> pizzasToChose)
 		{
-			List<PizzaModel> pizzasWithMozzarelaAndMushrooms = new List<PizzaModel>();
+			ObservableCollection<PizzaModel> pizzasWithMozzarelaAndMushrooms = new ObservableCollection<PizzaModel>();
 			foreach (PizzaModel pizza in pizzasToChose)
 			{
 				Boolean containsMozzarella = false;

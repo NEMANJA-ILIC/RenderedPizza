@@ -8,18 +8,77 @@
 		xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
 		xmlns:vms="clr-namespace:RenderedPizza.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="725" Width="1076">
 	<Window.DataContext>
 		<vms:MainWindowViewModel />
 	</Window.DataContext>
+	<Window.Resources>
+		<DataTemplate x:Key="PizzasTemplate">
+			<StackPanel>
+				<TextBlock Text="{Binding PizzaName}" />
+				<TextBlock>Price:</TextBlock>
+				<TextBlock Text="{Binding Price}" />
+			</StackPanel>
+		</DataTemplate>
+	</Window.Resources>
 
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
 			<ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadPizzas" />
 		</i:EventTrigger>
 	</i:Interaction.Triggers>
+	
 
 	<Grid>
-		<Label>Hello</Label>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="40"/>
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid Grid.Column="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Label Grid.Row="0" FontWeight="Bold" VerticalAlignment="Center">Pizzas with meat</Label>
+				<ListBox Grid.Row="1" ItemsSource="{Binding PizzasWithMeat}" ItemTemplate="{StaticResource PizzasTemplate}"></ListBox>
+			</Grid>
+			<Grid Grid.Column="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Label Grid.Row="0" FontWeight="Bold" VerticalAlignment="Center">Pizzas with more than one type of cheese</Label>
+				<ListBox Grid.Row="1" ItemsSource="{Binding PizzasWithMultipleChease}" ItemTemplate="{StaticResource PizzasTemplate}"></ListBox>
+			</Grid>
+			<Grid Grid.Column="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Label Grid.Row="0" FontWeight="Bold" VerticalAlignment="Center">Pizzas with meat and olives</Label>
+				<ListBox Grid.Row="1" ItemsSource="{Binding PizzasWithMeatAndOlives}" ItemTemplate="{StaticResource PizzasTemplate}"></ListBox>
+			</Grid>
+			<Grid Grid.Column="3">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Label Grid.Row="0" FontWeight="Bold" VerticalAlignment="Center">Pizzas with mozzarela and mushrooms</Label>
+				<ListBox Grid.Row="1" ItemsSource="{Binding PizzasWithMozzarelaAndMushrooms}" ItemTemplate="{StaticResource PizzasTemplate}"></ListBox>
+			</Grid>
+		</Grid>
+
+		<Grid Grid.Row="1">
+			<!--<Button x:Name="PostBtn" Content="POST!" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Command="{Binding PostCommand}"/>-->
+		</Grid>
+		
 	</Grid>
 </Window>
