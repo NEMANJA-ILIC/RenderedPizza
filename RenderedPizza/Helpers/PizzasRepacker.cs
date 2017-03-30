@@ -29,5 +29,96 @@ namespace RenderedPizza.Helpers
 
 			return tempPizzaModels;
 		}
+
+		public static List<PizzaModel> getPizzasWithMeat(List<PizzaModel> pizzasToChose)
+		{
+			List<PizzaModel> PizzasWithMeat = new List<PizzaModel>();
+			foreach (PizzaModel pizza in pizzasToChose)
+			{
+				foreach (string pizzaIngredient in pizza.Ingredients)
+				{
+					if (pizzaIngredient.Contains("meat") || pizzaIngredient.Contains("ham") || pizzaIngredient.Contains("sausage") || pizzaIngredient.Contains("salami") || pizzaIngredient.Contains("shrimps") || pizzaIngredient.Contains("mussels") || pizzaIngredient.Contains("tuna") || pizzaIngredient.Contains("calamari") || pizzaIngredient.Contains("anchovies") || pizzaIngredient.Contains("kebab") || pizzaIngredient.Contains("beef"))
+					{
+						PizzasWithMeat.Add(pizza);
+						break;
+					}
+				}
+			}
+
+			return PizzasWithMeat;
+		}
+
+		public static List<PizzaModel> getPizzasWithMultipleChease(List<PizzaModel> pizzasToChose)
+		{
+			List<PizzaModel> pizzasWithMultipleChease = new List<PizzaModel>();
+			foreach (PizzaModel pizza in pizzasToChose)
+			{
+				int cheeseCount = 0;
+				foreach (string pizzaIngredient in pizza.Ingredients)
+				{
+					if (pizzaIngredient.Contains("cheese") || pizzaIngredient.Contains("mozzarella"))
+					{
+						++cheeseCount;
+					}
+
+					if (cheeseCount > 1)
+					{
+						pizzasWithMultipleChease.Add(pizza);
+						break;
+					}
+				}
+			}
+			return pizzasWithMultipleChease;
+		}
+
+		public static List<PizzaModel> getPizzasWithMeatAndOlives(List<PizzaModel> pizzasToChose)
+		{
+			List<PizzaModel> pizzasWithMeatAndOlives = new List<PizzaModel>();
+			foreach (PizzaModel pizza in pizzasToChose)
+			{
+				foreach (string pizzaIngredient in pizza.Ingredients)
+				{
+					if (pizzaIngredient.Contains("olive"))
+					{
+						pizzasWithMeatAndOlives.Add(pizza);
+						break;
+					}
+				}
+			}
+
+			return pizzasWithMeatAndOlives;
+		}
+
+		public static List<PizzaModel> getPizzasWithMozzarelaAndMushrooms(List<PizzaModel> pizzasToChose)
+		{
+			List<PizzaModel> pizzasWithMozzarelaAndMushrooms = new List<PizzaModel>();
+			foreach (PizzaModel pizza in pizzasToChose)
+			{
+				Boolean containsMozzarella = false;
+				Boolean containsMushrooms = false;
+				foreach (string pizzaIngredient in pizza.Ingredients)
+				{
+					if (pizzaIngredient.Contains("mozzarella"))
+					{
+						containsMozzarella = true;
+					}
+					else
+					{
+						if (pizzaIngredient.Contains("mushroom"))
+						{
+							containsMushrooms = true;
+						}
+					}
+
+					if (containsMozzarella && containsMushrooms)
+					{
+						pizzasWithMozzarelaAndMushrooms.Add(pizza);
+						break;
+					}
+				}
+			}
+
+			return pizzasWithMozzarelaAndMushrooms;
+		}
 	}
 }

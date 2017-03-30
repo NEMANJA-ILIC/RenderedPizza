@@ -13,7 +13,16 @@ namespace RenderedPizza.ViewModels
 		public MainWindowViewModel()
 		{
 			pizzas = new List<PizzaModel>();
+			pizzasWithMeat = new List<PizzaModel>();
+			pizzasWithMultipleChease = new List<PizzaModel>();
+			pizzasWithMeatAndOlives = new List<PizzaModel>();
+			pizzasWithMozzarelaAndMushrooms = new List<PizzaModel>();
 		}
+
+		private List<PizzaModel> pizzasWithMeat;
+		private List<PizzaModel> pizzasWithMultipleChease;
+		private List<PizzaModel> pizzasWithMeatAndOlives;
+		private List<PizzaModel> pizzasWithMozzarelaAndMushrooms;
 
 		private List<PizzaModel> pizzas;
 		public List<PizzaModel> Pizzas
@@ -35,6 +44,11 @@ namespace RenderedPizza.ViewModels
 			JSONPizzasModel jsonPizzasModel = LargeJSON.JSONmanipulator._download_serialized_json_data<JSONPizzasModel>(pizzasUrl);
 
 			pizzas = RenderedPizza.Helpers.PizzasRepacker.RepackPizzas(jsonPizzasModel);
+
+			pizzasWithMeat = PizzasRepacker.getPizzasWithMeat(pizzas);
+			pizzasWithMultipleChease = PizzasRepacker.getPizzasWithMultipleChease(pizzas);
+			pizzasWithMeatAndOlives = PizzasRepacker.getPizzasWithMeatAndOlives(pizzasWithMeat);
+			pizzasWithMozzarelaAndMushrooms = PizzasRepacker.getPizzasWithMozzarelaAndMushrooms(pizzas);
 		}
 	}
 }
