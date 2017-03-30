@@ -218,7 +218,7 @@ namespace RenderedPizza.ViewModels
 				file.WriteLine("}}},");
 
 				// group_3
-				file.Write("\t\t\t\t{\"group_2\": {\"percentage\": \"");
+				file.Write("\t\t\t\t{\"group_3\": {\"percentage\": \"");
 				file.Write(PizzasWithMeatAndOlivesPercentage);
 				file.Write("%\", \"cheapest\":{\"");
 				file.Write(cheapestPizzaWithMeatAndOlives.PizzaName.ToLower());
@@ -238,7 +238,7 @@ namespace RenderedPizza.ViewModels
 				file.WriteLine("}}},");
 
 				// group_4
-				file.Write("\t\t\t\t{\"group_2\": {\"percentage\": \"");
+				file.Write("\t\t\t\t{\"group_4\": {\"percentage\": \"");
 				file.Write(PizzasWithMozzarelaAndMushroomsPercentage);
 				file.Write("%\", \"cheapest\":{\"");
 				file.Write(cheapestPizzaWithMozzarelaAndMushrooms.PizzaName.ToLower());
