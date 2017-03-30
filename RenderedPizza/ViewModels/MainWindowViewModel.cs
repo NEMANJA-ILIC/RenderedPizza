@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MVVMCommsDemo;
 using RenderedPizza.Helpers;
 using RenderedPizza.Models;
 using Weather3.Helpers;
@@ -19,7 +22,11 @@ namespace RenderedPizza.ViewModels
 			PizzasWithMultipleChease = new ObservableCollection<PizzaModel>();
 			PizzasWithMeatAndOlives = new ObservableCollection<PizzaModel>();
 			PizzasWithMozzarelaAndMushrooms = new ObservableCollection<PizzaModel>();
+			PostCommand = new RelayCommand(PostExecute, PostCanExecute);
+			postResult = "";
 		}
+
+		public RelayCommand PostCommand { get; set; }
 
 		public ObservableCollection<PizzaModel> PizzasWithMeat { get; set; }
 		public ObservableCollection<PizzaModel> PizzasWithMultipleChease { get; set; }
@@ -174,6 +181,41 @@ namespace RenderedPizza.ViewModels
 				}
 			}
 			CheapestPizzaWithMozzarelaAndMushrooms = tempPizza;
+		}
+
+		private string postResult;
+
+		public string PostResult
+		{
+			get
+			{
+				return postResult;
+			}
+			set
+			{
+				postResult = value;
+				OnPropertyChanged("PostResult");
+			}
+		}
+
+		private void PostExecute()
+		{
+			string jsonFile;
+			using (System.IO.StreamReader file = new System.IO.StreamReader("Pizzas.json"))
+			{
+				jsonFile = file.ReadToEnd();
+			}
+
+			using (var client = new WebClient())
+			{
+				client.Headers[HttpRequestHeader.ContentType] = "application/json";
+				PostResult = client.UploadString("http://coding-challenge.renderedtext.com/submit", "POST", jsonFile);
+			}
+		}
+
+		private bool PostCanExecute()
+		{
+			return true;
 		}
 
 		public void PrintJSONinFile()

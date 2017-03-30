@@ -77,7 +77,12 @@
 		</Grid>
 
 		<Grid Grid.Row="1">
-			<!--<Button x:Name="PostBtn" Content="POST!" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Command="{Binding PostCommand}"/>-->
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Column="0" Content="{Binding PostResult}" VerticalAlignment="Center"></Label>
+			<Button Grid.Column="1" x:Name="PostBtn" Content="POST!" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Command="{Binding PostCommand}"/>
 		</Grid>
 		
 	</Grid>
